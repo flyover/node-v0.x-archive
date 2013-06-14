@@ -48,7 +48,7 @@
           ['OS == "mac"', {
             'defines': [ '_DARWIN_USE_64_BIT_INODE=1' ],
           }],
-          ['OS == "linux"', {
+          ['OS == "linux" or OS=="android"', {
             'defines': [ '_POSIX_C_SOURCE=200112' ],
           }],
         ],
@@ -169,7 +169,7 @@
             }],
           ],
         }],
-        [ 'OS=="linux" or OS=="mac"', {
+        [ 'OS=="linux" or OS=="mac" or OS=="android"', {
           'sources': [ 'src/unix/proctitle.c' ],
         }],
         [ 'OS=="mac"', {
@@ -203,6 +203,17 @@
           ],
           'link_settings': {
             'libraries': [ '-ldl', '-lrt' ],
+          },
+        }],
+        [ 'OS=="android"', {
+          'sources': [
+            'src/unix/linux-core.c',
+            'src/unix/linux-inotify.c',
+            'src/unix/linux-syscalls.c',
+            'src/unix/linux-syscalls.h',
+          ],
+          'link_settings': {
+            'libraries': [ '-ldl' ], # rt is built into bionic on android
           },
         }],
         [ 'OS=="solaris"', {

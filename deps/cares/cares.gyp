@@ -128,7 +128,7 @@
             '-Wno-unused-parameter'
           ],
         }],
-        [ 'OS=="linux"', {
+        [ 'OS=="linux" or OS=="android"', {
           'include_dirs': [ 'config/linux' ],
           'sources': [ 'config/linux/ares_config.h' ]
         }],

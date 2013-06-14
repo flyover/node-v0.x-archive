@@ -1505,6 +1505,48 @@ static Handle<Value> Umask(const Arguments& args) {
 
 #ifdef __POSIX__
 
+#if defined(__ANDROID__)
+static int getpwnam_r(const char* name, struct passwd* pwd, char* buf, size_t size, struct passwd** pp)
+{
+	errno = 0;
+	struct passwd* _pwd = getpwnam(name);
+	if (_pwd != NULL)
+	{
+		memcpy(pwd, _pwd, sizeof(*pwd));
+		if (pp) { *pp = pwd; }
+		return 0;
+	}
+	if (pp) { *pp = NULL; }
+	return errno;
+}
+static int getpwuid_r(uid_t uid, struct passwd* pwd, char* buf, size_t size, struct passwd** pp)
+{
+	errno = 0;
+	struct passwd* _pwd = getpwuid(uid);
+	if (_pwd != NULL)
+	{
+		memcpy(pwd, _pwd, sizeof(*pwd));
+		if (pp) { *pp = pwd; }
+		return 0;
+	}
+	if (pp) { *pp = NULL; }
+	return errno;
+}
+static int getgrnam_r(const char *name, struct group* grp, char* buf, size_t size, struct group** pp)
+{
+	errno = 0;
+	struct group* _grp = getgrnam(name);
+	if (_grp != NULL)
+	{
+		memcpy(grp, _grp, sizeof(*grp));
+		if (pp) { *pp = grp; }
+		return 0;
+	}
+	if (pp) { *pp = NULL; }
+	return errno;
+}
+#endif
+
 static const uid_t uid_not_found = static_cast<uid_t>(-1);
 static const gid_t gid_not_found = static_cast<gid_t>(-1);
 
