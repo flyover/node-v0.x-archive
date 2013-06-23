@@ -129,7 +129,7 @@
           }]
         ]
       }],
-      [ 'OS=="linux" or OS=="freebsd" or OS=="openbsd" or OS=="solaris"', {
+      [ 'OS=="linux" or OS=="freebsd" or OS=="openbsd" or OS=="solaris" or OS=="android"', {
         'cflags': [ '-Wall' ],
         'cflags_cc': [ '-fno-rtti', '-fno-exceptions' ],
         'target_conditions': [
@@ -142,7 +142,7 @@
             'cflags': [ '-m32' ],
             'ldflags': [ '-m32' ],
           }],
-          [ 'OS=="linux"', {
+          [ 'OS=="linux" or OS=="android"', {
             'cflags': [ '-ansi' ],
           }],
           [ 'OS=="solaris"', {
