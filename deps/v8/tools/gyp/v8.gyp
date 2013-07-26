@@ -646,7 +646,11 @@
               }
             ],
             ['OS=="android"', {
+                'link_settings': {
+                  'libraries': [ '-llog' ],
+                },
                 'defines': [
+                  'ANDROID',
                   'CAN_USE_VFP_INSTRUCTIONS',
                 ],
                 'sources': [
