@@ -4,6 +4,9 @@ NODE_ROOT := $(LOCAL_PATH)
 
 BUILDTYPE ?= Release
 
+#NODE_GEN_PATH := out/$(BUILDTYPE)/obj/gen
+NODE_GEN_PATH := gen-android
+
 NODE_PREBUILT ?=
 
 NODE_COMMON_CFLAGS += -O2
@@ -57,7 +60,7 @@ NODE_CPPFLAGS += $(NODE_COMMON_CPPFLAGS)
 NODE_CPPFLAGS += $(NODE_CFLAGS)
 
 NODE_C_INCLUDES += src
-NODE_C_INCLUDES += out/$(BUILDTYPE)/obj/gen
+NODE_C_INCLUDES += $(NODE_GEN_PATH)
 
 NODE_EXPORT_C_INCLUDES += $(NODE_C_INCLUDES)
 
@@ -139,14 +142,17 @@ NODE_LIBRARY_FILES += lib/url.js
 NODE_LIBRARY_FILES += lib/util.js
 NODE_LIBRARY_FILES += lib/vm.js
 NODE_LIBRARY_FILES += lib/zlib.js
-NODE_LIBRARY_FILES += config.gypi
+NODE_LIBRARY_FILES += $(NODE_GEN_PATH)/config.gypi
 NODE_LIBRARY_FILES += src/macros.py
 NODE_LIBRARY_FILES += src/perfctr_macros.py
 
-$(NODE_ROOT)/out/$(BUILDTYPE)/obj/gen/node_natives.h: $(addprefix $(NODE_ROOT)/,$(NODE_LIBRARY_FILES))
+$(NODE_ROOT)/$(NODE_GEN_PATH)/config.gypi: $(NODE_ROOT)/config-android.gypi
+	mkdir -p $(@D) && cp -f $< $@
+
+$(NODE_ROOT)/$(NODE_GEN_PATH)/node_natives.h: $(addprefix $(NODE_ROOT)/,$(NODE_LIBRARY_FILES))
 	mkdir -p $(@D) && python $(NODE_ROOT)/tools/js2c.py $@ $(addprefix $(NODE_ROOT)/,$(NODE_LIBRARY_FILES))
 
-$(NODE_ROOT)/src/node_javascript.cc: $(NODE_ROOT)/out/$(BUILDTYPE)/obj/gen/node_natives.h
+$(NODE_ROOT)/src/node_javascript.cc: $(NODE_ROOT)/$(NODE_GEN_PATH)/node_natives.h
 
 ifneq ($(NODE_PREBUILT),)
 
@@ -1463,10 +1469,10 @@ endif
 V8_HEAPOBJECT_FILES += deps/v8/src/objects.h
 V8_HEAPOBJECT_FILES += deps/v8/src/objects-inl.h
 
-$(NODE_ROOT)/out/$(BUILDTYPE)/obj/gen/debug-support.cc: $(addprefix $(NODE_ROOT)/,$(V8_HEAPOBJECT_FILES))
+$(NODE_ROOT)/$(NODE_GEN_PATH)/debug-support.cc: $(addprefix $(NODE_ROOT)/,$(V8_HEAPOBJECT_FILES))
 	mkdir -p $(@D) && python $(NODE_ROOT)/deps/v8/tools/gen-postmortem-metadata.py $@ $(addprefix $(NODE_ROOT)/,$(V8_HEAPOBJECT_FILES))
 
-V8_BASE_SRC_FILES += out/$(BUILDTYPE)/obj/gen/debug-support.cc
+V8_BASE_SRC_FILES += $(NODE_GEN_PATH)/debug-support.cc
 
 ifneq ($(NODE_PREBUILT),)
 
@@ -1513,19 +1519,19 @@ V8_LIBRARY_FILES += deps/v8/src/json.js
 V8_LIBRARY_FILES += deps/v8/src/regexp.js
 V8_LIBRARY_FILES += deps/v8/src/macros.py
 
-$(NODE_ROOT)/out/$(BUILDTYPE)/obj/gen/libraries.cc: $(addprefix $(NODE_ROOT)/,$(V8_LIBRARY_FILES))
+$(NODE_ROOT)/$(NODE_GEN_PATH)/libraries.cc: $(addprefix $(NODE_ROOT)/,$(V8_LIBRARY_FILES))
 	mkdir -p $(@D) && python $(NODE_ROOT)/deps/v8/tools/js2c.py $@ CORE off $(addprefix $(NODE_ROOT)/,$(V8_LIBRARY_FILES))
 
-V8_NOSNAPSHOT_SRC_FILES += out/$(BUILDTYPE)/obj/gen/libraries.cc
+V8_NOSNAPSHOT_SRC_FILES += $(NODE_GEN_PATH)/libraries.cc
 
 V8_EXPERIMENTAL_LIBRARY_FILES += deps/v8/src/macros.py
 V8_EXPERIMENTAL_LIBRARY_FILES += deps/v8/src/proxy.js
 V8_EXPERIMENTAL_LIBRARY_FILES += deps/v8/src/collection.js
 
-$(NODE_ROOT)/out/$(BUILDTYPE)/obj/gen/experimental-libraries.cc: $(addprefix $(NODE_ROOT)/,$(V8_EXPERIMENTAL_LIBRARY_FILES))
+$(NODE_ROOT)/$(NODE_GEN_PATH)/experimental-libraries.cc: $(addprefix $(NODE_ROOT)/,$(V8_EXPERIMENTAL_LIBRARY_FILES))
 	mkdir -p $(@D) && python $(NODE_ROOT)/deps/v8/tools/js2c.py $@ EXPERIMENTAL off $(addprefix $(NODE_ROOT)/,$(V8_EXPERIMENTAL_LIBRARY_FILES))
 
-V8_NOSNAPSHOT_SRC_FILES += out/$(BUILDTYPE)/obj/gen/experimental-libraries.cc
+V8_NOSNAPSHOT_SRC_FILES += $(NODE_GEN_PATH)/experimental-libraries.cc
 
 ifneq ($(NODE_PREBUILT),)
 

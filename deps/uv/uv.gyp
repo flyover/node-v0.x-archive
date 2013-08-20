@@ -45,7 +45,7 @@
               '_FILE_OFFSET_BITS=64',
             ],
           }],
-          ['OS == "mac"', {
+          ['OS == "mac" or OS == "ios"', {
             'defines': [ '_DARWIN_USE_64_BIT_INODE=1' ],
           }],
           ['OS == "linux" or OS=="android"', {
@@ -167,7 +167,7 @@
             ['library=="shared_library"', {
               'cflags': [ '-fPIC' ],
             }],
-            ['library=="shared_library" and OS!="mac"', {
+            ['library=="shared_library" and OS!="mac" and OS!="ios"', {
               'link_settings': {
                 # Must correspond with UV_VERSION_MAJOR and UV_VERSION_MINOR
                 # in src/version.c
@@ -176,7 +176,7 @@
             }],
           ],
         }],
-        [ 'OS=="linux" or OS=="mac" or OS=="android"', {
+        [ 'OS=="linux" or OS=="mac" or OS=="android" or OS=="ios"', {
           'sources': [ 'src/unix/proctitle.c' ],
         }],
         [ 'OS=="mac"', {
@@ -196,7 +196,17 @@
             '_DARWIN_USE_64_BIT_INODE=1',
           ]
         }],
-        [ 'OS!="mac"', {
+        [ 'OS=="ios"', {
+          'sources': [
+            'src/unix/darwin.c',
+            'src/unix/fsevents.c',
+            'src/unix/darwin-proctitle.c',
+          ],
+          'defines': [
+            '_DARWIN_USE_64_BIT_INODE=1',
+          ]
+        }],
+        [ 'OS!="mac" and OS!="ios"', {
           # Enable on all platforms except OS X. The antique gcc/clang that
           # ships with Xcode emits waaaay too many false positives.
           'cflags': [ '-Wstrict-aliasing' ],
@@ -265,7 +275,7 @@
             'libraries': [ '-lkvm' ],
           },
         }],
-        [ 'OS in "mac freebsd dragonflybsd openbsd netbsd".split()', {
+        [ 'OS in "mac ios freebsd dragonflybsd openbsd netbsd".split()', {
           'sources': [ 'src/unix/kqueue.c' ],
         }],
         ['library=="shared_library"', {
@@ -276,7 +286,7 @@
           'dependencies': [ 'uv_dtrace_header' ],
           'include_dirs': [ '<(SHARED_INTERMEDIATE_DIR)' ],
           'conditions': [
-            ['OS != "mac"', {
+            ['OS != "mac" and OS != "ios"', {
               'sources': ['src/unix/dtrace.c' ],
             }],
           ],
@@ -484,7 +494,7 @@
       'target_name': 'uv_dtrace_provider',
       'type': 'none',
       'conditions': [
-        [ 'uv_use_dtrace=="true" and OS!="mac"', {
+        [ 'uv_use_dtrace=="true" and OS!="mac" and OS!="ios"', {
           'actions': [
             {
               'action_name': 'uv_dtrace_o',

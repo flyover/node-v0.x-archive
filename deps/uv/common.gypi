@@ -158,7 +158,7 @@
           }],
         ],
       }],
-      ['OS=="mac"', {
+      ['OS=="mac" or OS=="ios"', {
         'xcode_settings': {
           'ALWAYS_SEARCH_USER_PATHS': 'NO',
           'GCC_CW_ASM_SYNTAX': 'NO',                # No -fasm-blocks
@@ -190,6 +190,9 @@
           }],
           ['target_arch=="x64"', {
             'xcode_settings': {'ARCHS': ['x86_64']},
+          }],
+          ['target_arch=="arm"', {
+            'xcode_settings': {'ARCHS': ['armv7']},
           }],
         ],
         'target_conditions': [

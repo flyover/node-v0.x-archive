@@ -237,7 +237,7 @@ parser.add_option("--dest-os",
     action="store",
     dest="dest_os",
     help="Operating system to build for. Valid values are: "
-         "win, mac, solaris, freebsd, openbsd, linux, android")
+         "win, mac, solaris, freebsd, openbsd, linux, android, ios")
 
 parser.add_option("--no-ifaddrs",
     action="store_true",
