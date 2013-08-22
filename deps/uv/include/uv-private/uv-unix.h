@@ -54,6 +54,18 @@
 # include "uv-bsd.h"
 #endif
 
+#if defined(__ANDROID__)
+
+/* https://chromium.googlesource.com/external/google-breakpad/src.git/+/master/common/android/testing/pthread_fixes.h */
+
+typedef struct {
+  pthread_mutex_t  mutex;
+  pthread_cond_t   cond;
+  unsigned         count;
+} pthread_barrier_t;
+
+#endif
+
 #ifndef UV_IO_PRIVATE_PLATFORM_FIELDS
 # define UV_IO_PRIVATE_PLATFORM_FIELDS /* empty */
 #endif
