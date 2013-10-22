@@ -170,6 +170,9 @@
             ],
           }],
         ],
+        'xcode_settings': {
+          'ARCHS': [ 'armv7' ],
+        },
       }],  # v8_target_arch=="arm"
       ['v8_target_arch=="ia32"', {
         'defines': [
