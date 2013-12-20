@@ -18,7 +18,7 @@
    */
 #  if	defined(__ARM_ARCH_7__)	|| defined(__ARM_ARCH_7A__)	|| \
 	defined(__ARM_ARCH_7R__)|| defined(__ARM_ARCH_7M__)	|| \
-	defined(__ARM_ARCH_7EM__)
+	defined(__ARM_ARCH_7EM__) || defined(__ARM_ARCH_7S__)
 #   define __ARM_ARCH__ 7
 #  elif	defined(__ARM_ARCH_6__)	|| defined(__ARM_ARCH_6J__)	|| \
 	defined(__ARM_ARCH_6K__)|| defined(__ARM_ARCH_6M__)	|| \
