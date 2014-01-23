@@ -29,6 +29,9 @@
 #include "node_root_certs.h"
 
 #include <string.h>
+#if defined(__APPLE__)
+#include <strings.h>
+#endif
 #ifdef _MSC_VER
 #define strcasecmp _stricmp
 #endif

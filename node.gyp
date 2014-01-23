@@ -182,7 +182,7 @@
             'src/node_dtrace.cc',
           ],
           'conditions': [ [
-            'OS!="mac"', {
+            'OS!="mac" and OS!="ios"', {
               'sources': [
                 'src/node_dtrace_ustack.cc',
                 'src/node_dtrace_provider.cc',
@@ -269,6 +269,9 @@
             # we need to use node's preferred "darwin" rather than gyp's preferred "mac"
             'PLATFORM="darwin"',
           ],
+        }],
+        [ 'OS=="ios"', {
+          'libraries': [ '-framework CoreFoundation' ],
         }],
         [ 'OS=="freebsd"', {
           'libraries': [
@@ -421,7 +424,7 @@
       'target_name': 'node_dtrace_provider',
       'type': 'none',
       'conditions': [
-        [ 'node_use_dtrace=="true" and OS!="mac"', {
+        [ 'node_use_dtrace=="true" and OS!="mac" and OS!="ios"', {
           'actions': [
             {
               'action_name': 'node_dtrace_provider_o',
@@ -443,7 +446,7 @@
       'target_name': 'node_dtrace_ustack',
       'type': 'none',
       'conditions': [
-        [ 'node_use_dtrace=="true" and OS!="mac"', {
+        [ 'node_use_dtrace=="true" and OS!="mac" and OS!="ios"', {
           'actions': [
             {
               'action_name': 'node_dtrace_ustack_constants',
