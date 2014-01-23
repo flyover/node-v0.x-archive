@@ -199,6 +199,8 @@ struct node_module_struct {
   const char *modname;
 };
 
+NODE_EXTERN extern node_module_struct* (*get_external_module)(const char *name);
+
 node_module_struct* get_builtin_module(const char *name);
 
 /**

@@ -2010,6 +2010,8 @@ void FatalException(TryCatch &try_catch) {
 Persistent<Object> binding_cache;
 Persistent<Array> module_load_list;
 
+node_module_struct* (*get_external_module)(const char *name) = NULL;
+
 static Handle<Value> Binding(const Arguments& args) {
   HandleScope scope;
 
@@ -2034,7 +2036,13 @@ static Handle<Value> Binding(const Arguments& args) {
   uint32_t l = module_load_list->Length();
   module_load_list->Set(l, String::New(buf));
 
-  if ((modp = get_builtin_module(*module_v)) != NULL) {
+  if ((get_external_module != NULL) && ((modp = get_external_module(*module_v)) != NULL)) {
+	  exports = Object::New();
+	  // External bindings don't have a "module" object,
+	  // only exports.
+	  modp->register_func(exports, Undefined());
+	  binding_cache->Set(module, exports);
+  } else if ((modp = get_builtin_module(*module_v)) != NULL) {
     exports = Object::New();
     // Internal bindings don't have a "module" object,
     // only exports.
