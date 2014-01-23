@@ -9,13 +9,15 @@ NODE_GEN_PATH := gen-android
 
 NODE_PREBUILT ?=
 
-NODE_COMMON_CFLAGS += -O2
+NODE_COMMON_CFLAGS := -O2
 #NODE_COMMON_CFLAGS += -O3
 NODE_COMMON_CFLAGS += -pthread
+ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 NODE_COMMON_CFLAGS += -march=armv7-a
 NODE_COMMON_CFLAGS += -mtune=cortex-a9
 NODE_COMMON_CFLAGS += -mfpu=neon
 NODE_COMMON_CFLAGS += -mfloat-abi=softfp
+endif # TARGET_ARCH_ABI == armeabi-v7a
 NODE_COMMON_CFLAGS += -fPIC
 NODE_COMMON_CFLAGS += -fno-strict-aliasing
 NODE_COMMON_CFLAGS += -fno-tree-vrp
@@ -35,17 +37,17 @@ NODE_COMMON_CFLAGS += -Wno-abi
 NODE_COMMON_CFLAGS += -Wno-unused-parameter
 NODE_COMMON_CFLAGS += -Wa,--noexecstack
 
-NODE_COMMON_CPPFLAGS += -fPIC
+NODE_COMMON_CPPFLAGS := -fPIC
 NODE_COMMON_CPPFLAGS += -fno-rtti
 NODE_COMMON_CPPFLAGS += -Wnon-virtual-dtor
 NODE_COMMON_CPPFLAGS += -Wno-error=non-virtual-dtor
 
-NODE_COMMON_LDFLAGS += -pthread
+NODE_COMMON_LDFLAGS := -pthread
 NODE_COMMON_LDFLAGS += -rdynamic
 
 # node
 
-NODE_CFLAGS += $(NODE_COMMON_CFLAGS)
+NODE_CFLAGS := $(NODE_COMMON_CFLAGS)
 NODE_CFLAGS += '-DNODE_WANT_INTERNALS=1'
 NODE_CFLAGS += '-DARCH="$(TARGET_ARCH)"'
 NODE_CFLAGS += '-DPLATFORM="android"'
@@ -56,19 +58,19 @@ NODE_CFLAGS += '-D_LARGEFILE_SOURCE'
 NODE_CFLAGS += '-D_FILE_OFFSET_BITS=64'
 NODE_CFLAGS += '-D_POSIX_C_SOURCE=200112'
 
-NODE_CPPFLAGS += $(NODE_COMMON_CPPFLAGS)
+NODE_CPPFLAGS := $(NODE_COMMON_CPPFLAGS)
 NODE_CPPFLAGS += $(NODE_CFLAGS)
 
-NODE_C_INCLUDES += src
+NODE_C_INCLUDES := src
 NODE_C_INCLUDES += $(NODE_GEN_PATH)
 
-NODE_EXPORT_C_INCLUDES += $(NODE_C_INCLUDES)
+NODE_EXPORT_C_INCLUDES := $(NODE_C_INCLUDES)
 
-NODE_LDFLAGS += $(NODE_COMMON_LDFLAGS)
+NODE_LDFLAGS := $(NODE_COMMON_LDFLAGS)
 
-NODE_LDLIBS += -llog -lz -ldl -lm
+NODE_LDLIBS := -llog -lz -ldl -lm
 
-NODE_SRC_FILES += src/cares_wrap.cc
+NODE_SRC_FILES := src/cares_wrap.cc
 NODE_SRC_FILES += src/fs_event_wrap.cc
 NODE_SRC_FILES += src/handle_wrap.cc
 NODE_SRC_FILES += src/node.cc
@@ -101,7 +103,7 @@ NODE_SRC_FILES += src/tty_wrap.cc
 NODE_SRC_FILES += src/udp_wrap.cc
 NODE_SRC_FILES += src/v8_typed_array.cc
 
-NODE_LIBRARY_FILES += src/node.js
+NODE_LIBRARY_FILES := src/node.js
 NODE_LIBRARY_FILES += lib/_debugger.js
 NODE_LIBRARY_FILES += lib/_linklist.js
 NODE_LIBRARY_FILES += lib/assert.js
@@ -175,7 +177,9 @@ else # NODE_PREBUILT
 include $(CLEAR_VARS)
 LOCAL_MODULE := node
 LOCAL_MODULE_FILENAME := libnode
+ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 LOCAL_ARM_NEON := true
+endif # TARGET_ARCH_ABI == armeabi-v7a
 LOCAL_CFLAGS := $(NODE_CFLAGS)
 LOCAL_CPPFLAGS := $(NODE_CPPFLAGS)
 LOCAL_C_INCLUDES := $(addprefix $(NODE_ROOT)/,$(NODE_C_INCLUDES))
@@ -194,10 +198,14 @@ include $(BUILD_STATIC_LIBRARY)
 
 endif # NODE_PREBUILT
 
+# node executable
+
 include $(CLEAR_VARS)
 LOCAL_MODULE := executable-node
 LOCAL_MODULE_FILENAME := node
+ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 LOCAL_ARM_NEON := true
+endif # TARGET_ARCH_ABI == armeabi-v7a
 LOCAL_CFLAGS := $(NODE_CFLAGS)
 LOCAL_CPPFLAGS := $(NODE_CPPFLAGS)
 LOCAL_SRC_FILES := src/node_main.cc
@@ -206,7 +214,7 @@ include $(BUILD_EXECUTABLE)
 
 # cares
 
-CARES_CFLAGS += $(NODE_COMMON_CFLAGS)
+CARES_CFLAGS := $(NODE_COMMON_CFLAGS)
 CARES_CFLAGS += '-D_LARGEFILE_SOURCE'
 CARES_CFLAGS += '-D_FILE_OFFSET_BITS=64'
 CARES_CFLAGS += '-D_GNU_SOURCE'
@@ -214,18 +222,18 @@ CARES_CFLAGS += '-DHAVE_CONFIG_H'
 #CARES_CFLAGS += --std=gnu89
 #CARES_CFLAGS += -pedantic
 
-CARES_CPPFLAGS += $(NODE_COMMON_CPPFLAGS)
+CARES_CPPFLAGS := $(NODE_COMMON_CPPFLAGS)
 CARES_CPPFLAGS += $(CARES_CFLAGS)
 
-CARES_C_INCLUDES += deps/cares/include
+CARES_C_INCLUDES := deps/cares/include
 CARES_C_INCLUDES += deps/cares/src
 CARES_C_INCLUDES += deps/cares/config/linux
 
-CARES_EXPORT_C_INCLUDES += deps/cares/include
+CARES_EXPORT_C_INCLUDES := deps/cares/include
 
-CARES_LDFLAGS += $(NODE_COMMON_LDFLAGS)
+CARES_LDFLAGS := $(NODE_COMMON_LDFLAGS)
 
-CARES_SRC_FILES += deps/cares/src/ares_cancel.c
+CARES_SRC_FILES := deps/cares/src/ares_cancel.c
 CARES_SRC_FILES += deps/cares/src/ares__close_sockets.c
 CARES_SRC_FILES += deps/cares/src/ares_data.c
 CARES_SRC_FILES += deps/cares/src/ares_destroy.c
@@ -285,7 +293,9 @@ else # NODE_PREBUILT
 include $(CLEAR_VARS)
 LOCAL_MODULE := static-library-cares
 LOCAL_MODULE_FILENAME := libcares
+ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 LOCAL_ARM_NEON := true
+endif # TARGET_ARCH_ABI == armeabi-v7a
 LOCAL_CFLAGS := $(CARES_CFLAGS) '-DCARES_STATICLIB'
 LOCAL_CPPFLAGS := $(CARES_CPPFLAGS) '-DCARES_STATICLIB'
 LOCAL_C_INCLUDES := $(addprefix $(NODE_ROOT)/,$(CARES_C_INCLUDES))
@@ -298,19 +308,19 @@ endif # NODE_PREBUILT
 
 # chrome_zlib
 
-CHROME_ZLIB_CFLAGS += $(NODE_COMMON_CFLAGS)
+CHROME_ZLIB_CFLAGS := $(NODE_COMMON_CFLAGS)
 
-CHROME_ZLIB_CPPFLAGS += $(NODE_COMMON_CPPFLAGS)
+CHROME_ZLIB_CPPFLAGS := $(NODE_COMMON_CPPFLAGS)
 CHROME_ZLIB_CPPFLAGS += $(CHROME_ZLIB_CFLAGS)
 
-CHROME_ZLIB_C_INCLUDES += deps/zlib
+CHROME_ZLIB_C_INCLUDES := deps/zlib
 CHROME_ZLIB_C_INCLUDES += deps/zlib/contrib/minizip
 
-CHROME_ZLIB_EXTERNAL_C_INCLUDES += $(ZLIB_C_INCLUDES)
+CHROME_ZLIB_EXTERNAL_C_INCLUDES := $(ZLIB_C_INCLUDES)
 
-CHROME_ZLIB_LDFLAGS += $(NODE_COMMON_LDFLAGS)
+CHROME_ZLIB_LDFLAGS := $(NODE_COMMON_LDFLAGS)
 
-CHROME_ZLIB_SRC_FILES += deps/zlib/contrib/minizip/ioapi.c
+CHROME_ZLIB_SRC_FILES := deps/zlib/contrib/minizip/ioapi.c
 #CHROME_ZLIB_SRC_FILES += deps/zlib/contrib/minizip/iowin32.c
 #CHROME_ZLIB_SRC_FILES += deps/zlib/contrib/minizip/miniunz.c
 #CHROME_ZLIB_SRC_FILES += deps/zlib/contrib/minizip/minizip.c
@@ -343,7 +353,9 @@ else # NODE_PREBUILT
 include $(CLEAR_VARS)
 LOCAL_MODULE := static-library-chrome_zlib
 LOCAL_MODULE_FILENAME := libchrome_zlib
+ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 LOCAL_ARM_NEON := true
+endif # TARGET_ARCH_ABI == armeabi-v7a
 LOCAL_CFLAGS := $(CHROME_ZLIB_CFLAGS)
 LOCAL_CPPFLAGS := $(CHROME_ZLIB_CPPFLAGS)
 LOCAL_C_INCLUDES := $(addprefix $(NODE_ROOT)/,$(CHROME_ZLIB_C_INCLUDES))
@@ -356,19 +368,19 @@ endif # NODE_PREBUILT
 
 # http_parser
 
-HTTP_PARSER_CFLAGS += $(NODE_COMMON_CFLAGS)
+HTTP_PARSER_CFLAGS := $(NODE_COMMON_CFLAGS)
 HTTP_PARSER_CFLAGS += '-DHTTP_PARSER_STRICT=0'
 
-HTTP_PARSER_CPPFLAGS += $(NODE_COMMON_CPPFLAGS)
+HTTP_PARSER_CPPFLAGS := $(NODE_COMMON_CPPFLAGS)
 HTTP_PARSER_CPPFLAGS += $(HTTP_PARSER_CFLAGS)
 
-HTTP_PARSER_C_INCLUDES += deps/http_parser
+HTTP_PARSER_C_INCLUDES := deps/http_parser
 
-HTTP_PARSER_EXPORT_C_INCLUDES += $(HTTP_PARSER_C_INCLUDES)
+HTTP_PARSER_EXPORT_C_INCLUDES := $(HTTP_PARSER_C_INCLUDES)
 
-HTTP_PARSER_LDFLAGS += $(NODE_COMMON_LDFLAGS)
+HTTP_PARSER_LDFLAGS := $(NODE_COMMON_LDFLAGS)
 
-HTTP_PARSER_SRC_FILES += deps/http_parser/http_parser.c
+HTTP_PARSER_SRC_FILES := deps/http_parser/http_parser.c
 
 ifneq ($(NODE_PREBUILT),)
 
@@ -383,7 +395,9 @@ else # NODE_PREBUILT
 include $(CLEAR_VARS)
 LOCAL_MODULE := static-library-http_parser
 LOCAL_MODULE_FILENAME := libhttp_parser
+ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 LOCAL_ARM_NEON := true
+endif # TARGET_ARCH_ABI == armeabi-v7a
 LOCAL_CFLAGS := $(HTTP_PARSER_CFLAGS)
 LOCAL_CPPFLAGS := $(HTTP_PARSER_CPPFLAGS)
 LOCAL_C_INCLUDES := $(addprefix $(NODE_ROOT)/,$(HTTP_PARSER_C_INCLUDES))
@@ -396,7 +410,7 @@ endif # NODE_PREBUILT
 
 # openssl
 
-OPENSSL_CFLAGS += $(NODE_COMMON_CFLAGS)
+OPENSSL_CFLAGS := $(NODE_COMMON_CFLAGS)
 OPENSSL_CFLAGS += '-DL_ENDIAN'
 OPENSSL_CFLAGS += '-DPURIFY'
 OPENSSL_CFLAGS += '-D_REENTRANT'
@@ -408,10 +422,10 @@ OPENSSL_CFLAGS += '-DTERMIOS'
 OPENSSL_CFLAGS += -Wno-missing-field-initializers
 OPENSSL_CFLAGS += -Wno-old-style-declaration
 
-OPENSSL_CPPFLAGS += $(NODE_COMMON_CPPFLAGS)
+OPENSSL_CPPFLAGS := $(NODE_COMMON_CPPFLAGS)
 OPENSSL_CPPFLAGS += $(OPENSSL_CFLAGS)
 
-OPENSSL_C_INCLUDES += deps/openssl
+OPENSSL_C_INCLUDES := deps/openssl
 OPENSSL_C_INCLUDES += deps/openssl/openssl
 OPENSSL_C_INCLUDES += deps/openssl/openssl/crypto
 OPENSSL_C_INCLUDES += deps/openssl/openssl/crypto/asn1
@@ -420,11 +434,11 @@ OPENSSL_C_INCLUDES += deps/openssl/openssl/crypto/modes
 OPENSSL_C_INCLUDES += deps/openssl/openssl/crypto/store
 OPENSSL_C_INCLUDES += deps/openssl/openssl/include
 
-OPENSSL_EXPORT_C_INCLUDES += deps/openssl/openssl/include
+OPENSSL_EXPORT_C_INCLUDES := deps/openssl/openssl/include
 
-OPENSSL_LDFLAGS += $(NODE_COMMON_LDFLAGS)
+OPENSSL_LDFLAGS := $(NODE_COMMON_LDFLAGS)
 
-OPENSSL_SRC_FILES += deps/openssl/openssl/ssl/bio_ssl.c
+OPENSSL_SRC_FILES := deps/openssl/openssl/ssl/bio_ssl.c
 OPENSSL_SRC_FILES += deps/openssl/openssl/ssl/d1_both.c
 OPENSSL_SRC_FILES += deps/openssl/openssl/ssl/d1_clnt.c
 OPENSSL_SRC_FILES += deps/openssl/openssl/ssl/d1_enc.c
@@ -1089,7 +1103,9 @@ else # NODE_PREBUILT
 include $(CLEAR_VARS)
 LOCAL_MODULE := static-library-openssl
 LOCAL_MODULE_FILENAME := libopenssl
+ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 LOCAL_ARM_NEON := true
+endif # TARGET_ARCH_ABI == armeabi-v7a
 LOCAL_CFLAGS := $(OPENSSL_CFLAGS)
 LOCAL_CPPFLAGS := $(OPENSSL_CPPFLAGS)
 LOCAL_C_INCLUDES := $(addprefix $(NODE_ROOT)/,$(OPENSSL_C_INCLUDES))
@@ -1103,7 +1119,7 @@ endif # NODE_PREBUILT
 
 # uv
 
-UV_CFLAGS += $(NODE_COMMON_CFLAGS)
+UV_CFLAGS := $(NODE_COMMON_CFLAGS)
 UV_CFLAGS += '-D_LARGEFILE_SOURCE'
 UV_CFLAGS += '-D_FILE_OFFSET_BITS=64'
 UV_CFLAGS += '-D_GNU_SOURCE'
@@ -1112,18 +1128,18 @@ UV_CFLAGS += '-DHAVE_CONFIG_H'
 #UV_CFLAGS += -pedantic
 UV_CFLAGS += -Wstrict-aliasing
 
-UV_CPPFLAGS += $(NODE_COMMON_CPPFLAGS)
+UV_CPPFLAGS := $(NODE_COMMON_CPPFLAGS)
 UV_CPPFLAGS += $(UV_CFLAGS)
 
-UV_C_INCLUDES += deps/uv/include
+UV_C_INCLUDES := deps/uv/include
 UV_C_INCLUDES += deps/uv/include/uv-private
 UV_C_INCLUDES += deps/uv/src
 
-UV_EXPORT_C_INCLUDES += deps/uv/include
+UV_EXPORT_C_INCLUDES := deps/uv/include
 
-UV_LDFLAGS += $(NODE_COMMON_LDFLAGS)
+UV_LDFLAGS := $(NODE_COMMON_LDFLAGS)
 
-UV_SRC_FILES += deps/uv/src/fs-poll.c
+UV_SRC_FILES := deps/uv/src/fs-poll.c
 UV_SRC_FILES += deps/uv/src/inet.c
 UV_SRC_FILES += deps/uv/src/uv-common.c
 UV_SRC_FILES += deps/uv/src/version.c
@@ -1200,7 +1216,9 @@ else # NODE_PREBUILT
 include $(CLEAR_VARS)
 LOCAL_MODULE := static-library-uv
 LOCAL_MODULE_FILENAME := libuv
+ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 LOCAL_ARM_NEON := true
+endif # TARGET_ARCH_ABI == armeabi-v7a
 LOCAL_CFLAGS := $(UV_CFLAGS)
 LOCAL_CPPFLAGS := $(UV_CPPFLAGS)
 LOCAL_C_INCLUDES := $(addprefix $(NODE_ROOT)/,$(UV_C_INCLUDES))
@@ -1213,7 +1231,7 @@ endif # NODE_PREBUILT
 
 # v8
 
-V8_CFLAGS += $(NODE_COMMON_CFLAGS)
+V8_CFLAGS := $(NODE_COMMON_CFLAGS)
 V8_CFLAGS += '-DANDROID'
 V8_CFLAGS += '-DV8_ANDROID_LOG_STDOUT'
 V8_CFLAGS += '-DENABLE_DEBUGGER_SUPPORT'
@@ -1238,18 +1256,18 @@ V8_CFLAGS += '-DHAVE_OFF64_T'
 V8_CFLAGS += '-DHAVE_SYS_UIO_H'
 V8_CFLAGS += '-DANDROID_BINSIZE_HACK'
 
-V8_CPPFLAGS += $(NODE_COMMON_CPPFLAGS)
+V8_CPPFLAGS := $(NODE_COMMON_CPPFLAGS)
 V8_CPPFLAGS += $(V8_CFLAGS)
 
-V8_C_INCLUDES += deps/v8/src
+V8_C_INCLUDES := deps/v8/src
 
-V8_EXPORT_C_INCLUDES += deps/v8/include
+V8_EXPORT_C_INCLUDES := deps/v8/include
 
-V8_LDFLAGS += $(NODE_COMMON_LDFLAGS)
+V8_LDFLAGS := $(NODE_COMMON_LDFLAGS)
 
 # v8_base
 
-V8_BASE_SRC_FILES += deps/v8/src/accessors.cc
+V8_BASE_SRC_FILES := deps/v8/src/accessors.cc
 V8_BASE_SRC_FILES += deps/v8/src/allocation.cc
 V8_BASE_SRC_FILES += deps/v8/src/api.cc
 V8_BASE_SRC_FILES += deps/v8/src/assembler.cc
@@ -1466,7 +1484,7 @@ V8_BASE_SRC_FILES += deps/v8/src/x64/simulator-x64.cc
 V8_BASE_SRC_FILES += deps/v8/src/x64/stub-cache-x64.cc
 endif
 
-V8_HEAPOBJECT_FILES += deps/v8/src/objects.h
+V8_HEAPOBJECT_FILES := deps/v8/src/objects.h
 V8_HEAPOBJECT_FILES += deps/v8/src/objects-inl.h
 
 $(NODE_ROOT)/$(NODE_GEN_PATH)/debug-support.cc: $(addprefix $(NODE_ROOT)/,$(V8_HEAPOBJECT_FILES))
@@ -1488,7 +1506,9 @@ else # NODE_PREBUILT
 include $(CLEAR_VARS)
 LOCAL_MODULE := static-library-v8_base
 LOCAL_MODULE_FILENAME := libv8_base
+ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 LOCAL_ARM_NEON := true
+endif # TARGET_ARCH_ABI == armeabi-v7a
 LOCAL_CFLAGS := $(V8_CFLAGS)
 LOCAL_CPPFLAGS := $(V8_CPPFLAGS)
 LOCAL_C_INCLUDES := $(addprefix $(NODE_ROOT)/,$(V8_C_INCLUDES))
@@ -1501,9 +1521,9 @@ endif # NODE_PREBUILT
 
 # v8_nosnapshot
 
-V8_NOSNAPSHOT_SRC_FILES += deps/v8/src/snapshot-empty.cc
+V8_NOSNAPSHOT_SRC_FILES := deps/v8/src/snapshot-empty.cc
 
-V8_LIBRARY_FILES += deps/v8/src/runtime.js
+V8_LIBRARY_FILES := deps/v8/src/runtime.js
 V8_LIBRARY_FILES += deps/v8/src/v8natives.js
 V8_LIBRARY_FILES += deps/v8/src/array.js
 V8_LIBRARY_FILES += deps/v8/src/string.js
@@ -1524,7 +1544,7 @@ $(NODE_ROOT)/$(NODE_GEN_PATH)/libraries.cc: $(addprefix $(NODE_ROOT)/,$(V8_LIBRA
 
 V8_NOSNAPSHOT_SRC_FILES += $(NODE_GEN_PATH)/libraries.cc
 
-V8_EXPERIMENTAL_LIBRARY_FILES += deps/v8/src/macros.py
+V8_EXPERIMENTAL_LIBRARY_FILES := deps/v8/src/macros.py
 V8_EXPERIMENTAL_LIBRARY_FILES += deps/v8/src/proxy.js
 V8_EXPERIMENTAL_LIBRARY_FILES += deps/v8/src/collection.js
 
@@ -1547,7 +1567,9 @@ else # NODE_PREBUILT
 include $(CLEAR_VARS)
 LOCAL_MODULE := static-library-v8_nosnapshot
 LOCAL_MODULE_FILENAME := libv8_nosnapshot
+ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 LOCAL_ARM_NEON := true
+endif # TARGET_ARCH_ABI == armeabi-v7a
 LOCAL_CFLAGS := $(V8_CFLAGS)
 LOCAL_CPPFLAGS := $(V8_CPPFLAGS)
 LOCAL_C_INCLUDES := $(addprefix $(NODE_ROOT)/,$(V8_C_INCLUDES))
