@@ -29,7 +29,7 @@
 #define V8_ARM_CONSTANTS_ARM_H_
 
 // ARM EABI is required.
-#if defined(__arm__) && !defined(__ARM_EABI__)
+#if defined(__arm__) && !defined(__ARM_EABI__) && !defined(__APPLE__)
 #error ARM EABI support is required.
 #endif
 
@@ -42,6 +42,7 @@
 
 #if defined(__ARM_ARCH_7A__) || \
     defined(__ARM_ARCH_7R__) || \
+    defined(__ARM_ARCH_7S__) || \
     defined(__ARM_ARCH_7__)
 # define CAN_USE_ARMV7_INSTRUCTIONS 1
 #endif

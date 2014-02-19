@@ -28,6 +28,9 @@
 #include "string_bytes.h"
 
 #include <string.h>
+#if defined(__APPLE__)
+#include <strings.h>
+#endif
 #ifdef _MSC_VER
 #define strcasecmp _stricmp
 #endif

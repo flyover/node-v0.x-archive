@@ -137,7 +137,7 @@
         ],
       }],
 
-      [ 'OS=="linux" or OS=="freebsd" or OS=="openbsd" or OS=="solaris"', {
+      [ 'OS=="linux" or OS=="freebsd" or OS=="openbsd" or OS=="solaris" or OS=="android"', {
         'variables': {
           'gcc_version%': '<!(python build/gcc_version.py)>)'
         },
@@ -148,7 +148,7 @@
             'cflags': [ '-m32' ],
             'ldflags': [ '-m32' ]
           }],
-          [ 'OS=="linux"', {
+          [ 'OS=="linux" or OS=="android"', {
             'cflags': [ '-ansi' ]
           }],
           [ 'visibility=="hidden" and gcc_version >= "4.0.0"', {
