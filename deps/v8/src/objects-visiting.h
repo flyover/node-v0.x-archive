@@ -152,11 +152,7 @@ class VisitorDispatchTable {
     // every element of callbacks_ array will remain correct
     // pointer (memcpy might be implemented as a byte copying loop).
     for (int i = 0; i < StaticVisitorBase::kVisitorIdCount; i++) {
-#ifdef V8_HOST_ARCH_64_BIT
-      NoBarrier_Store(reinterpret_cast<Atomic64 *>(&callbacks_[i]), other->callbacks_[i]);
-#else
-      NoBarrier_Store(reinterpret_cast<Atomic32 *>(&callbacks_[i]), other->callbacks_[i]);
-#endif
+      NoBarrier_Store(&callbacks_[i], other->callbacks_[i]);
     }
   }
 
