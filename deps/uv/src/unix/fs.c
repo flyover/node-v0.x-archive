@@ -44,7 +44,7 @@
 # include <sys/uio.h>
 #endif
 
-#if defined(__ANDROID__)
+#if defined(USE_UV_WRAP)
 
 /* expose callbacks for unix fs access */
 
@@ -68,7 +68,7 @@ ssize_t (*uv_fs_wrap_unix_pwrite)(int fd, const void *buf, size_t count, off_t o
 #define write   uv_fs_wrap_unix_write
 #define pwrite  uv_fs_wrap_unix_pwrite
 
-#endif /* defined(__ANDROID__) */
+#endif /* defined(USE_UV_WRAP) */
 
 #define INIT(type)                                                            \
   do {                                                                        \

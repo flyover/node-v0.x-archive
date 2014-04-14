@@ -27,7 +27,7 @@
 #include <string.h>
 #include <locale.h>
 
-#if defined(__ANDROID__)
+#if defined(USE_UV_WRAP)
 
 /* expose callbacks for unix dl access */
 
@@ -41,7 +41,7 @@ int   (*uv_dl_wrap_unix_dlclose)(void *handle)						= dlclose;
 #define dlsym	uv_dl_wrap_unix_dlsym
 #define dlclose	uv_dl_wrap_unix_dlclose
 
-#endif /* defined(__ANDROID__) */
+#endif /* defined(USE_UV_WRAP) */
 
 static int uv__dlerror(uv_lib_t* lib);
 
