@@ -61,16 +61,8 @@
 #endif
 
 #if defined(USE_UV_WRAP)
-
-/* expose callbacks for unix core access */
-
-char* (*uv_core_wrap_unix_getcwd)(char *buf, size_t size)	= getcwd;
-int   (*uv_core_wrap_unix_chdir )(const char *path)			= chdir;
-
-#define getcwd	uv_core_wrap_unix_getcwd
-#define chdir	uv_core_wrap_unix_chdir
-
-#endif /* defined(USE_UV_WRAP) */
+#include "wrap.h"
+#endif
 
 static void uv__run_pending(uv_loop_t* loop);
 

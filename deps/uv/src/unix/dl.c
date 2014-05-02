@@ -28,20 +28,8 @@
 #include <locale.h>
 
 #if defined(USE_UV_WRAP)
-
-/* expose callbacks for unix dl access */
-
-void* (*uv_dl_wrap_unix_dlopen )(const char *filename, int flag)	= dlopen;
-char* (*uv_dl_wrap_unix_dlerror)(void)								= (char*(*)(void)) dlerror;
-void* (*uv_dl_wrap_unix_dlsym  )(void *handle, const char *symbol)	= dlsym;
-int   (*uv_dl_wrap_unix_dlclose)(void *handle)						= dlclose;
-
-#define dlopen	uv_dl_wrap_unix_dlopen
-#define dlerror	uv_dl_wrap_unix_dlerror
-#define dlsym	uv_dl_wrap_unix_dlsym
-#define dlclose	uv_dl_wrap_unix_dlclose
-
-#endif /* defined(USE_UV_WRAP) */
+#include "wrap.h"
+#endif
 
 static int uv__dlerror(uv_lib_t* lib);
 

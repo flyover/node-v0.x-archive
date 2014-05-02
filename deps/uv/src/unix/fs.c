@@ -45,30 +45,8 @@
 #endif
 
 #if defined(USE_UV_WRAP)
-
-/* expose callbacks for unix fs access */
-
-int     (*uv_fs_wrap_unix_stat  )(const char *path, struct stat *buf)                   = stat;
-int     (*uv_fs_wrap_unix_lstat )(const char *path, struct stat *buf)                   = lstat;
-int     (*uv_fs_wrap_unix_open  )(const char* path, int flags, ...)                     = open;
-int     (*uv_fs_wrap_unix_close )(int fd)                                               = close;
-int     (*uv_fs_wrap_unix_fstat )(int fd, struct stat *buf)                             = fstat;
-ssize_t (*uv_fs_wrap_unix_read  )(int fd, void *buf, size_t count)                      = read;
-ssize_t (*uv_fs_wrap_unix_pread )(int fd, void *buf, size_t count, off_t offset)        = pread;
-ssize_t (*uv_fs_wrap_unix_write )(int fd, const void *buf, size_t count)                = write;
-ssize_t (*uv_fs_wrap_unix_pwrite)(int fd, const void *buf, size_t count, off_t offset)  = pwrite;
-
-#define stat    uv_fs_wrap_unix_stat
-#define lstat   uv_fs_wrap_unix_lstat
-#define open    uv_fs_wrap_unix_open
-#define close   uv_fs_wrap_unix_close
-#define fstat   uv_fs_wrap_unix_fstat
-#define read    uv_fs_wrap_unix_read
-#define pread   uv_fs_wrap_unix_pread
-#define write   uv_fs_wrap_unix_write
-#define pwrite  uv_fs_wrap_unix_pwrite
-
-#endif /* defined(USE_UV_WRAP) */
+#include "wrap.h"
+#endif
 
 #define INIT(type)                                                            \
   do {                                                                        \
