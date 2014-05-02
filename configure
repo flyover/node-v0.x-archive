@@ -237,7 +237,7 @@ parser.add_option("--dest-os",
     action="store",
     dest="dest_os",
     help="Operating system to build for. Valid values are: "
-         "win, mac, solaris, freebsd, openbsd, linux")
+         "win, mac, solaris, freebsd, openbsd, linux, android, ios")
 
 parser.add_option("--no-ifaddrs",
     action="store_true",
@@ -470,6 +470,13 @@ def configure_node(o):
   target_arch = options.dest_cpu or host_arch
   o['variables']['host_arch'] = host_arch
   o['variables']['target_arch'] = target_arch
+
+  o['variables']['host_os'] = os.name
+  if options.dest_os:
+    o['variables']['OS'] = options.dest_os
+    o['variables']['target_os'] = options.dest_os
+  else:
+    o['variables']['target_os'] = o['variables']['host_os']
 
   if target_arch == 'arm':
     configure_arm(o)
