@@ -190,9 +190,9 @@
    * boundary. See crypto/rc4/rc4_enc.c for further details.
    */
 # undef RC4_CHUNK
-# if (defined(_M_X64) || defined(__x86_64__)) && defined(_WIN32)
+# if (defined(_M_X64) || defined(__x86_64__) || defined(__arm64__)) && defined(_WIN32)
 #  define RC4_CHUNK unsigned long long
-# elif (defined(_M_X64) || defined(__x86_64__)) && !defined(_WIN32)
+# elif (defined(_M_X64) || defined(__x86_64__) || defined(__arm64__)) && !defined(_WIN32)
 #  define RC4_CHUNK unsigned long
 # elif defined(__arm__) || defined(__mips__)
 #  define RC4_CHUNK unsigned long
@@ -205,7 +205,7 @@
  /* If this is set to 'unsigned int' on a DEC Alpha, this gives about a
   * %20 speed up (longs are 8 bytes, int's are 4). */
 # undef DES_LONG
-# if defined(_M_X64) || defined(__x86_64__) || defined(__arm__) || defined(__mips__)
+# if defined(_M_X64) || defined(__x86_64__) || defined(__arm64__) || defined(__arm__) || defined(__mips__)
 #  define DES_LONG unsigned int
 # elif defined(_M_IX86) || defined(__i386__)
 #  define DES_LONG unsigned long
@@ -231,9 +231,9 @@
 # undef THIRTY_TWO_BIT
 # undef SIXTEEN_BIT
 # undef EIGHT_BIT
-# if (defined(_M_X64) || defined(__x86_64__)) && defined(_WIN32)
+# if (defined(_M_X64) || defined(__x86_64__) || defined(__arm64__)) && defined(_WIN32)
 #  define SIXTY_FOUR_BIT
-# elif (defined(_M_X64) || defined(__x86_64__)) && !defined(_WIN32)
+# elif (defined(_M_X64) || defined(__x86_64__) || defined(__arm64__)) && !defined(_WIN32)
 #  define SIXTY_FOUR_BIT_LONG
 # elif defined(_M_IX86) || defined(__i386__) || defined(__arm__) || defined(__mips__)
 #  define THIRTY_TWO_BIT

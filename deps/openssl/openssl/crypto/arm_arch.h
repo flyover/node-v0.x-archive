@@ -16,7 +16,9 @@
    * gcc/config/arm/arm.c. On a side note it defines
    * __ARMEL__/__ARMEB__ for little-/big-endian.
    */
-#  if	defined(__ARM_ARCH_7__)	|| defined(__ARM_ARCH_7A__)	|| \
+#  if	defined(__ARM64_ARCH_8__)
+#   define __ARM_ARCH__ 8
+#  elif	defined(__ARM_ARCH_7__)	|| defined(__ARM_ARCH_7A__)	|| \
 	defined(__ARM_ARCH_7R__)|| defined(__ARM_ARCH_7M__)	|| \
 	defined(__ARM_ARCH_7EM__) || defined(__ARM_ARCH_7S__)
 #   define __ARM_ARCH__ 7
