@@ -36,17 +36,6 @@
 	{
 		"node", "-e",
 		"console.log('Hello, Node ' + process.version + '!');"
-
-		"var a = new Uint32Array(1);"
-		"a[0] = 0xff;"
-		"console.log(a[0], a[0].toString(16));"
-		"a[0] = ((a[0] << 24) & 0xff000000);"
-		"console.log(a[0], a[0].toString(16));"
-
-		"var a = 0xff;"
-		"console.log(a, a.toString(16));"
-		"a = ((a << 24) & 0xff000000);"
-		"console.log(a, a.toString(16));"
 	};
     const int node_argc = sizeof(node_argv) / sizeof(*node_argv);
     int node_err = node::Start(node_argc, (char**) node_argv);
