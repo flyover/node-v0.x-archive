@@ -60,6 +60,10 @@
 # include <sys/wait.h>
 #endif
 
+#if defined(USE_UV_WRAP)
+#include "wrap.h"
+#endif
+
 static void uv__run_pending(uv_loop_t* loop);
 
 static uv_loop_t default_loop_struct;
