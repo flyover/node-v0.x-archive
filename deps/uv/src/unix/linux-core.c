@@ -42,6 +42,9 @@
 #  undef HAVE_IFADDRS_H
 # endif
 #endif
+#if defined(__ANDROID__)
+# undef HAVE_IFADDRS_H
+#endif
 #ifdef HAVE_IFADDRS_H
 # include <ifaddrs.h>
 #endif
