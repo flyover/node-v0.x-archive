@@ -667,9 +667,6 @@
 		046479EF19005A6400680B5F /* cms_uncomp.c in Sources */ = {isa = PBXBuildFile; fileRef = 04646F8B1900570800680B5F /* cms_uncomp.c */; };
 		046479F019005A6400680B5F /* cms_ver.c in Sources */ = {isa = PBXBuildFile; fileRef = 04646F8C1900570800680B5F /* cms_ver.c */; };
 		046479F119005A6400680B5F /* easy-tls.c in Sources */ = {isa = PBXBuildFile; fileRef = 04646F951900570800680B5F /* easy-tls.c */; };
-		046479F319005A6400680B5F /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 04646F9C1900570800680B5F /* base64.c */; };
-		046479F519005A6400680B5F /* loadrsa.c in Sources */ = {isa = PBXBuildFile; fileRef = 04646F9E1900570800680B5F /* loadrsa.c */; };
-		04647A0219005A6500680B5F /* loadkeys.c in Sources */ = {isa = PBXBuildFile; fileRef = 04646FC41900570800680B5F /* loadkeys.c */; };
 		04647A0319005A6500680B5F /* pkread.c in Sources */ = {isa = PBXBuildFile; fileRef = 04646FCA1900570800680B5F /* pkread.c */; };
 		04647A0419005A6500680B5F /* pkwrite.c in Sources */ = {isa = PBXBuildFile; fileRef = 04646FCB1900570800680B5F /* pkwrite.c */; };
 		04647A0519005A6500680B5F /* prime.c in Sources */ = {isa = PBXBuildFile; fileRef = 04646FCF1900570800680B5F /* prime.c */; };
@@ -1459,9 +1456,6 @@
 		046480D71900635100680B5F /* cms_uncomp.c in Sources */ = {isa = PBXBuildFile; fileRef = 04646F8B1900570800680B5F /* cms_uncomp.c */; };
 		046480D81900635100680B5F /* cms_ver.c in Sources */ = {isa = PBXBuildFile; fileRef = 04646F8C1900570800680B5F /* cms_ver.c */; };
 		046480D91900635100680B5F /* easy-tls.c in Sources */ = {isa = PBXBuildFile; fileRef = 04646F951900570800680B5F /* easy-tls.c */; };
-		046480DA1900635100680B5F /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 04646F9C1900570800680B5F /* base64.c */; };
-		046480DB1900635100680B5F /* loadrsa.c in Sources */ = {isa = PBXBuildFile; fileRef = 04646F9E1900570800680B5F /* loadrsa.c */; };
-		046480DC1900635100680B5F /* loadkeys.c in Sources */ = {isa = PBXBuildFile; fileRef = 04646FC41900570800680B5F /* loadkeys.c */; };
 		046480DD1900635100680B5F /* pkread.c in Sources */ = {isa = PBXBuildFile; fileRef = 04646FCA1900570800680B5F /* pkread.c */; };
 		046480DE1900635100680B5F /* pkwrite.c in Sources */ = {isa = PBXBuildFile; fileRef = 04646FCB1900570800680B5F /* pkwrite.c */; };
 		046480DF1900635100680B5F /* prime.c in Sources */ = {isa = PBXBuildFile; fileRef = 04646FCF1900570800680B5F /* prime.c */; };
@@ -17606,9 +17600,6 @@
 				046479EF19005A6400680B5F /* cms_uncomp.c in Sources */,
 				046479F019005A6400680B5F /* cms_ver.c in Sources */,
 				046479F119005A6400680B5F /* easy-tls.c in Sources */,
-				046479F319005A6400680B5F /* base64.c in Sources */,
-				046479F519005A6400680B5F /* loadrsa.c in Sources */,
-				04647A0219005A6500680B5F /* loadkeys.c in Sources */,
 				04647A0319005A6500680B5F /* pkread.c in Sources */,
 				04647A0419005A6500680B5F /* pkwrite.c in Sources */,
 				04647A0519005A6500680B5F /* prime.c in Sources */,
@@ -18321,9 +18312,6 @@
 				046480D71900635100680B5F /* cms_uncomp.c in Sources */,
 				046480D81900635100680B5F /* cms_ver.c in Sources */,
 				046480D91900635100680B5F /* easy-tls.c in Sources */,
-				046480DA1900635100680B5F /* base64.c in Sources */,
-				046480DB1900635100680B5F /* loadrsa.c in Sources */,
-				046480DC1900635100680B5F /* loadkeys.c in Sources */,
 				046480DD1900635100680B5F /* pkread.c in Sources */,
 				046480DE1900635100680B5F /* pkwrite.c in Sources */,
 				046480DF1900635100680B5F /* prime.c in Sources */,
