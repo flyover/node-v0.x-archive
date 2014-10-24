@@ -178,7 +178,11 @@ void OS::Abort() {
 
 
 void OS::DebugBreak() {
+#ifdef V8_HOST_ARCH_ARM
+  asm("bkpt 0");
+#else
   asm("int $3");
+#endif
 }
 
 
@@ -275,6 +279,142 @@ uint64_t OS::CpuFeaturesImpliedByPlatform() {
   const uint64_t one = 1;
   return (one << SSE2) | (one << CMOV) | (one << RDTSC) | (one << CPUID);
 }
+
+
+#ifdef __arm__
+static bool CPUInfoContainsString(const char * search_string) {
+  const char* file_name = "/proc/cpuinfo";
+  // This is written as a straight shot one pass parser
+  // and not using STL string and ifstream because,
+  // on Linux, it's reading from a (non-mmap-able)
+  // character special device.
+  FILE* f = NULL;
+  const char* what = search_string;
+
+  if (NULL == (f = fopen(file_name, "r")))
+    return false;
+
+  int k;
+  while (EOF != (k = fgetc(f))) {
+    if (k == *what) {
+      ++what;
+      while ((*what != '\0') && (*what == fgetc(f))) {
+        ++what;
+      }
+      if (*what == '\0') {
+        fclose(f);
+        return true;
+      } else {
+        what = search_string;
+      }
+    }
+  }
+  fclose(f);
+
+  // Did not find string in the proc file.
+  return false;
+}
+
+
+bool OS::ArmCpuHasFeature(CpuFeature feature) {
+  const char* search_string = NULL;
+  // Simple detection of VFP at runtime for Linux.
+  // It is based on /proc/cpuinfo, which reveals hardware configuration
+  // to user-space applications.  According to ARM (mid 2009), no similar
+  // facility is universally available on the ARM architectures,
+  // so it's up to individual OSes to provide such.
+  switch (feature) {
+    case VFP2:
+      search_string = "vfp";
+      break;
+    case VFP3:
+      search_string = "vfpv3";
+      break;
+    case ARMv7:
+      search_string = "ARMv7";
+      break;
+    case SUDIV:
+      search_string = "idiva";
+      break;
+    default:
+      UNREACHABLE();
+  }
+
+  if (CPUInfoContainsString(search_string)) {
+    return true;
+  }
+
+  if (feature == VFP3) {
+    // Some old kernels will report vfp not vfpv3. Here we make a last attempt
+    // to detect vfpv3 by checking for vfp *and* neon, since neon is only
+    // available on architectures with vfpv3.
+    // Checking neon on its own is not enough as it is possible to have neon
+    // without vfp.
+    if (CPUInfoContainsString("vfp") && CPUInfoContainsString("neon")) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+
+CpuImplementer OS::GetCpuImplementer() {
+  static bool use_cached_value = false;
+  static CpuImplementer cached_value = UNKNOWN_IMPLEMENTER;
+  if (use_cached_value) {
+    return cached_value;
+  }
+  if (CPUInfoContainsString("CPU implementer\t: 0x41")) {
+    cached_value = ARM_IMPLEMENTER;
+  } else if (CPUInfoContainsString("CPU implementer\t: 0x51")) {
+    cached_value = QUALCOMM_IMPLEMENTER;
+  } else {
+    cached_value = UNKNOWN_IMPLEMENTER;
+  }
+  use_cached_value = true;
+  return cached_value;
+}
+
+
+bool OS::ArmUsingHardFloat() {
+  // GCC versions 4.6 and above define __ARM_PCS or __ARM_PCS_VFP to specify
+  // the Floating Point ABI used (PCS stands for Procedure Call Standard).
+  // We use these as well as a couple of other defines to statically determine
+  // what FP ABI used.
+  // GCC versions 4.4 and below don't support hard-fp.
+  // GCC versions 4.5 may support hard-fp without defining __ARM_PCS or
+  // __ARM_PCS_VFP.
+
+#define GCC_VERSION (__GNUC__ * 10000                                          \
+                     + __GNUC_MINOR__ * 100                                    \
+                     + __GNUC_PATCHLEVEL__)
+#if GCC_VERSION >= 40600
+#if defined(__ARM_PCS_VFP)
+  return true;
+#else
+  return false;
+#endif
+
+#elif GCC_VERSION < 40500
+  return false;
+
+#else
+#if defined(__ARM_PCS_VFP)
+  return true;
+#elif defined(__ARM_PCS) || defined(__SOFTFP) || !defined(__VFP_FP__)
+  return false;
+#else
+#error "Your version of GCC does not report the FP ABI compiled for."          \
+       "Please report it on this issue"                                        \
+       "http://code.google.com/p/v8/issues/detail?id=2140"
+
+#endif
+#endif
+#undef GCC_VERSION
+}
+
+#endif  // def __arm__
 
 
 int OS::ActivationFrameAlignment() {
@@ -843,6 +983,15 @@ class SamplerThread : public Thread {
 #else
 #define REGISTER_FIELD(name) e ## name
 #endif  // __DARWIN_UNIX03
+#elif V8_HOST_ARCH_ARM
+    thread_state_flavor_t flavor = ARM_THREAD_STATE;
+    arm_thread_state_t state;
+    mach_msg_type_number_t count = ARM_THREAD_STATE_COUNT;
+#if __DARWIN_UNIX03
+#define REGISTER_FIELD(name) __ ## name
+#else
+#define REGISTER_FIELD(name) name
+#endif  // __DARWIN_UNIX03
 #else
 #error Unsupported Mac OS X host architecture.
 #endif  // V8_HOST_ARCH
@@ -852,9 +1001,15 @@ class SamplerThread : public Thread {
                          reinterpret_cast<natural_t*>(&state),
                          &count) == KERN_SUCCESS) {
       sample->state = sampler->isolate()->current_vm_state();
+#if V8_HOST_ARCH_ARM
+      sample->pc = reinterpret_cast<Address>(state.REGISTER_FIELD(pc));
+      sample->sp = reinterpret_cast<Address>(state.REGISTER_FIELD(sp));
+      sample->fp = reinterpret_cast<Address>(state.REGISTER_FIELD(r[7]));
+#else
       sample->pc = reinterpret_cast<Address>(state.REGISTER_FIELD(ip));
       sample->sp = reinterpret_cast<Address>(state.REGISTER_FIELD(sp));
       sample->fp = reinterpret_cast<Address>(state.REGISTER_FIELD(bp));
+#endif
       sampler->SampleStack(sample);
       sampler->Tick(sample);
     }

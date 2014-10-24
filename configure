@@ -481,6 +481,13 @@ def configure_node(o):
   o['variables']['host_arch'] = host_arch
   o['variables']['target_arch'] = target_arch
 
+  o['variables']['host_os'] = os.name
+  if options.dest_os:
+    o['variables']['OS'] = options.dest_os
+    o['variables']['target_os'] = options.dest_os
+  else:
+    o['variables']['target_os'] = o['variables']['host_os']
+
   if target_arch != host_arch and not options.without_snapshot:
     o['variables']['want_separate_host_toolset'] = 1
   else:
