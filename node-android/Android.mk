@@ -319,14 +319,16 @@ CHROME_ZLIB_EXTERNAL_C_INCLUDES := $(ZLIB_C_INCLUDES)
 
 CHROME_ZLIB_LDFLAGS := $(NODE_COMMON_LDFLAGS)
 
-CHROME_ZLIB_SRC_FILES := $(NODE_PATH)/deps/zlib/contrib/minizip/ioapi.c
-CHROME_ZLIB_SRC_FILES += $(NODE_PATH)/deps/zlib/contrib/minizip/unzip.c
+CHROME_ZLIB_SRC_FILES := $(NODE_PATH)/deps/zlib/contrib/minizip/unzip.c
 CHROME_ZLIB_SRC_FILES += $(NODE_PATH)/deps/zlib/contrib/minizip/zip.c
 CHROME_ZLIB_SRC_FILES += $(NODE_PATH)/deps/zlib/adler32.c
 CHROME_ZLIB_SRC_FILES += $(NODE_PATH)/deps/zlib/compress.c
 CHROME_ZLIB_SRC_FILES += $(NODE_PATH)/deps/zlib/crc32.c
 CHROME_ZLIB_SRC_FILES += $(NODE_PATH)/deps/zlib/deflate.c
-CHROME_ZLIB_SRC_FILES += $(NODE_PATH)/deps/zlib/gzio.c
+CHROME_ZLIB_SRC_FILES += $(NODE_PATH)/deps/zlib/gzclose.c
+CHROME_ZLIB_SRC_FILES += $(NODE_PATH)/deps/zlib/gzlib.c
+CHROME_ZLIB_SRC_FILES += $(NODE_PATH)/deps/zlib/gzread.c
+CHROME_ZLIB_SRC_FILES += $(NODE_PATH)/deps/zlib/gzwrite.c
 CHROME_ZLIB_SRC_FILES += $(NODE_PATH)/deps/zlib/infback.c
 CHROME_ZLIB_SRC_FILES += $(NODE_PATH)/deps/zlib/inffast.c
 CHROME_ZLIB_SRC_FILES += $(NODE_PATH)/deps/zlib/inflate.c

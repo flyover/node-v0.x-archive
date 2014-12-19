@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -80,6 +80,14 @@
 		046103D3C133DBA0F36E10B8 /* aes_cbc.c in Sources */ = {isa = PBXBuildFile; fileRef = 361151347E6442C691A5028D /* aes_cbc.c */; };
 		04A991134505B39EA836562E /* e_rc4_hmac_md5.c in Sources */ = {isa = PBXBuildFile; fileRef = CDCAEA48161B502A4B9D0FC3 /* e_rc4_hmac_md5.c */; };
 		04B14A5300CD7A4443DA6637 /* pem_xaux.c in Sources */ = {isa = PBXBuildFile; fileRef = 8F2952A9945E4DAFA1B32BEA /* pem_xaux.c */; };
+		04D47C671A447CAF00111D89 /* gzclose.c in Sources */ = {isa = PBXBuildFile; fileRef = 04D47C631A447CAF00111D89 /* gzclose.c */; };
+		04D47C681A447CAF00111D89 /* gzclose.c in Sources */ = {isa = PBXBuildFile; fileRef = 04D47C631A447CAF00111D89 /* gzclose.c */; };
+		04D47C691A447CAF00111D89 /* gzlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 04D47C641A447CAF00111D89 /* gzlib.c */; };
+		04D47C6A1A447CAF00111D89 /* gzlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 04D47C641A447CAF00111D89 /* gzlib.c */; };
+		04D47C6B1A447CAF00111D89 /* gzread.c in Sources */ = {isa = PBXBuildFile; fileRef = 04D47C651A447CAF00111D89 /* gzread.c */; };
+		04D47C6C1A447CAF00111D89 /* gzread.c in Sources */ = {isa = PBXBuildFile; fileRef = 04D47C651A447CAF00111D89 /* gzread.c */; };
+		04D47C6D1A447CAF00111D89 /* gzwrite.c in Sources */ = {isa = PBXBuildFile; fileRef = 04D47C661A447CAF00111D89 /* gzwrite.c */; };
+		04D47C6E1A447CAF00111D89 /* gzwrite.c in Sources */ = {isa = PBXBuildFile; fileRef = 04D47C661A447CAF00111D89 /* gzwrite.c */; };
 		04D71B98DD72A0B90B471A41 /* x_nx509.c in Sources */ = {isa = PBXBuildFile; fileRef = 188D400D2414A5D3C59866E7 /* x_nx509.c */; };
 		04E561621886506E9FCD1F7D /* date.cc in Sources */ = {isa = PBXBuildFile; fileRef = 35AD9BFA0C1830BBE4D4EF4E /* date.cc */; };
 		04EEC9A9925A960D1BA38B5F /* heap.cc in Sources */ = {isa = PBXBuildFile; fileRef = 2AE90590D716589C21B78DA0 /* heap.cc */; };
@@ -139,7 +147,6 @@
 		0D8F05DBCD0426C1C5898D7D /* cbc_cksm.c in Sources */ = {isa = PBXBuildFile; fileRef = 7CF59A28337B1A039B16F4F3 /* cbc_cksm.c */; };
 		0D950ED4E2DF6B2A195AD23C /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = DE6738C61F14CCB1589B60DA /* zip.c */; };
 		0DE64454079A32FAA0094F27 /* ecp_oct.c in Sources */ = {isa = PBXBuildFile; fileRef = 30ABAB2A3501A3BB465AE072 /* ecp_oct.c */; };
-		0DFDCDE238A50C9669D3FE68 /* gzio.c in Sources */ = {isa = PBXBuildFile; fileRef = 4528DA7B160D3044ACE624AE /* gzio.c */; };
 		0E269128153C687FC05B058F /* externalize-string-extension.cc in Sources */ = {isa = PBXBuildFile; fileRef = BF0EBE4BD3E4D95DD4246031 /* externalize-string-extension.cc */; };
 		0E411D6609EB896DC5A0C2EA /* e_des3.c in Sources */ = {isa = PBXBuildFile; fileRef = F3B686C5E46D53BCC72347B3 /* e_des3.c */; };
 		0E456D374BC9E13CAA0D5916 /* poll.c in Sources */ = {isa = PBXBuildFile; fileRef = FD0DBE9901B287365F364FFC /* poll.c */; };
@@ -642,7 +649,6 @@
 		5E73A720C3BAD2AFC6CFE238 /* f_string.c in Sources */ = {isa = PBXBuildFile; fileRef = 22FCEE1A1424D8C36562C9CA /* f_string.c */; };
 		5E8C3F2F0993555C97784740 /* e_sureware.c in Sources */ = {isa = PBXBuildFile; fileRef = F1F03F77ED2D59D82F1A38F8 /* e_sureware.c */; };
 		5E9788AFAB0A1035DF7E0DE5 /* hydrogen-instructions.cc in Sources */ = {isa = PBXBuildFile; fileRef = A30D04B74F22A4DEF8022AD6 /* hydrogen-instructions.cc */; };
-		5E9AF2FC1C77FB9502E99050 /* gzio.c in Sources */ = {isa = PBXBuildFile; fileRef = 4528DA7B160D3044ACE624AE /* gzio.c */; };
 		5EC7AD96022AF218E77B1D1D /* m_mdc2.c in Sources */ = {isa = PBXBuildFile; fileRef = B84584B535696B87403B022E /* m_mdc2.c */; };
 		5F0C7DB3A5BFA74588BFAABC /* ec_ameth.c in Sources */ = {isa = PBXBuildFile; fileRef = E5BD3E03542221E59FB08A15 /* ec_ameth.c */; };
 		5F392267E42A650F3BD48714 /* infback.c in Sources */ = {isa = PBXBuildFile; fileRef = BC44FEA71C34B96DE00CCF4B /* infback.c */; };
@@ -1767,6 +1773,10 @@
 		041DED7C0B8695377F8B9FF0 /* ec_curve.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ec_curve.c; sourceTree = "<group>"; };
 		043725A50958227C474A6079 /* a_int.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = a_int.c; sourceTree = "<group>"; };
 		0452E11CA11CA7030532C53E /* cms_err.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = cms_err.c; sourceTree = "<group>"; };
+		04D47C631A447CAF00111D89 /* gzclose.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gzclose.c; sourceTree = "<group>"; };
+		04D47C641A447CAF00111D89 /* gzlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gzlib.c; sourceTree = "<group>"; };
+		04D47C651A447CAF00111D89 /* gzread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gzread.c; sourceTree = "<group>"; };
+		04D47C661A447CAF00111D89 /* gzwrite.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gzwrite.c; sourceTree = "<group>"; };
 		04F7CE9541094089E7DFA9A8 /* o_str.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = o_str.c; sourceTree = "<group>"; };
 		052B355EB4D68DD57FEB77DD /* x509rset.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = x509rset.c; sourceTree = "<group>"; };
 		05FA15BED32F1179170ECBA2 /* windows_port.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = windows_port.c; sourceTree = "<group>"; };
@@ -1995,7 +2005,6 @@
 		440D3EC0423421A4C3F879E4 /* snapshot-common.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "snapshot-common.cc"; sourceTree = "<group>"; };
 		449C0F177360141556B80139 /* dh_err.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = dh_err.c; sourceTree = "<group>"; };
 		45051427E44265DA140E14A4 /* bf_cfb64.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bf_cfb64.c; sourceTree = "<group>"; };
-		4528DA7B160D3044ACE624AE /* gzio.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = gzio.c; sourceTree = "<group>"; };
 		452B1C22DF4EE61AE1729B51 /* ec2_mult.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ec2_mult.c; sourceTree = "<group>"; };
 		453B91076AFCD5E09E758AE5 /* i_ofb64.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = i_ofb64.c; sourceTree = "<group>"; };
 		4584BF52AF77B1C55BFEC776 /* eng_table.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = eng_table.c; sourceTree = "<group>"; };
@@ -2845,7 +2854,10 @@
 				EEE87237003813A900EA9C88 /* compress.c */,
 				D183213F571F34A3A4917CF9 /* crc32.c */,
 				0639225DE65C112CF1EB2C23 /* deflate.c */,
-				4528DA7B160D3044ACE624AE /* gzio.c */,
+				04D47C631A447CAF00111D89 /* gzclose.c */,
+				04D47C641A447CAF00111D89 /* gzlib.c */,
+				04D47C651A447CAF00111D89 /* gzread.c */,
+				04D47C661A447CAF00111D89 /* gzwrite.c */,
 				BC44FEA71C34B96DE00CCF4B /* infback.c */,
 				5697D6FDA3B928A6FFB43A03 /* inffast.c */,
 				C24A3D65439F71B4057964E6 /* inflate.c */,
@@ -4256,7 +4268,11 @@
 			};
 			buildConfigurationList = 20D096CDA0D24A92365C0E99 /* Build configuration list for PBXProject "node-osx" */;
 			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = B78F55AA1DFC270A5DFDAA36;
 			projectDirPath = "";
 			projectRoot = "";
@@ -4347,6 +4363,7 @@
 				A68A19A29D09FCD6423D8915 /* darwin.c in Sources */,
 				252EA961DF5D9310E7703A02 /* darwin-proctitle.c in Sources */,
 				4E345802AA5709AE414C06D8 /* dl.c in Sources */,
+				04D47C6E1A447CAF00111D89 /* gzwrite.c in Sources */,
 				03D24B29A20D70B7720BCDDA /* error.c in Sources */,
 				139885B78BB536EB757BE7BB /* fs.c in Sources */,
 				5CBBCE0CE25B2F567AF2373E /* fsevents.c in Sources */,
@@ -4984,6 +5001,7 @@
 				3B34359959756A9C1BC03658 /* x509_r2x.c in Sources */,
 				3912DDD2CFDC0288C3AB67F0 /* x509_req.c in Sources */,
 				BE4E02E8F51DD3F2E4AEDD44 /* x509_set.c in Sources */,
+				04D47C6A1A447CAF00111D89 /* gzlib.c in Sources */,
 				0019174F945F047FB41B4725 /* x509_trs.c in Sources */,
 				BDB19B978CE4EDC5991F37F3 /* x509_txt.c in Sources */,
 				0E67A0FB727A3D84CB9CFA8A /* x509_v3.c in Sources */,
@@ -5007,6 +5025,7 @@
 				72167601EF81DFEA1739E3EA /* v3_alt.c in Sources */,
 				0CC9141F39A536528DD01AA2 /* v3_asid.c in Sources */,
 				877CCA46D97E980B41880D3B /* v3_bcons.c in Sources */,
+				04D47C681A447CAF00111D89 /* gzclose.c in Sources */,
 				A3D6660DA169B52C5AABC6B6 /* v3_bitst.c in Sources */,
 				1F97551017AE32F7C6B775DF /* v3_conf.c in Sources */,
 				4B16051784F5E0D4BD72F101 /* v3_cpols.c in Sources */,
@@ -5032,6 +5051,7 @@
 				AA146E027F84D44333E13B0E /* v3_utl.c in Sources */,
 				DC4580B23450D9BF7FA7F231 /* v3err.c in Sources */,
 				89ACCA14538C1F9567B615B9 /* e_4758cca.c in Sources */,
+				04D47C6C1A447CAF00111D89 /* gzread.c in Sources */,
 				6622BBBB09D12BF161734B91 /* e_aep.c in Sources */,
 				EA1D8D6DD19C5D56BBB91B38 /* e_atalla.c in Sources */,
 				2588F1B92E13277E0351BD49 /* e_capi.c in Sources */,
@@ -5062,7 +5082,6 @@
 				5682D5BBB5EC9C43508EB5E5 /* compress.c in Sources */,
 				4A56293CD53EA33E9DFB8778 /* crc32.c in Sources */,
 				C542754B0931141F78D0B5D7 /* deflate.c in Sources */,
-				5E9AF2FC1C77FB9502E99050 /* gzio.c in Sources */,
 				5F392267E42A650F3BD48714 /* infback.c in Sources */,
 				85A2CF4208C10D4506B1931E /* inffast.c in Sources */,
 				4BE9B3A702EA1FFF5738BA67 /* inflate.c in Sources */,
@@ -5137,6 +5156,7 @@
 				7F9D29F5AA84CD4E5BEB481C /* proctitle.c in Sources */,
 				9FD0B0E7FEA8AE07F88C4229 /* wrap.c in Sources */,
 				FAD6B82F5E5E588F324FA395 /* accessors.cc in Sources */,
+				04D47C691A447CAF00111D89 /* gzlib.c in Sources */,
 				19B13DA30A96EF97DA956C6F /* allocation.cc in Sources */,
 				1116EB0D3DCCF60C5B687DF0 /* api.cc in Sources */,
 				3BC23ED879D010394E818572 /* assembler.cc in Sources */,
@@ -5498,10 +5518,12 @@
 				D783C0609335BAE9E1E6E88E /* bn_gcd.c in Sources */,
 				89D8C2E399ACAA39107F2619 /* bn_gf2m.c in Sources */,
 				A03938691EED570885E5B1B1 /* bn_kron.c in Sources */,
+				04D47C6B1A447CAF00111D89 /* gzread.c in Sources */,
 				2E9DAFB35AC0FE61252A2413 /* bn_lib.c in Sources */,
 				82A27C5FF5AAE82D4871AB1A /* bn_mod.c in Sources */,
 				88CDE30EE33F1C9AB5ED185F /* bn_mont.c in Sources */,
 				FD7B52F090DCEECF1BFDD2A5 /* bn_mpi.c in Sources */,
+				04D47C6D1A447CAF00111D89 /* gzwrite.c in Sources */,
 				989BA32E368563F869784DEC /* bn_mul.c in Sources */,
 				9E7D1CE73E5A9F26F4854F99 /* bn_nist.c in Sources */,
 				7153017230B2291E42874B66 /* bn_prime.c in Sources */,
@@ -5720,6 +5742,7 @@
 				B6027A25E60E82F465A33749 /* m_sha.c in Sources */,
 				E6A6835E91891877E26F6B40 /* m_sha1.c in Sources */,
 				48915D9C56C810C110FCE929 /* m_sigver.c in Sources */,
+				04D47C671A447CAF00111D89 /* gzclose.c in Sources */,
 				E2B351539E6895DA5F5572B6 /* m_wp.c in Sources */,
 				BF1310C356CE114700E1E6F2 /* names.c in Sources */,
 				90FAAAC54B3D92BCFA24EF95 /* p5_crpt.c in Sources */,
@@ -5979,7 +6002,6 @@
 				FB1966D5F3D702282A187E7A /* compress.c in Sources */,
 				C5581FF775830E8CD1B8F4D0 /* crc32.c in Sources */,
 				E11E3CA83A49A419BB4BD8B6 /* deflate.c in Sources */,
-				0DFDCDE238A50C9669D3FE68 /* gzio.c in Sources */,
 				BB8685F04926D965CE714E84 /* infback.c in Sources */,
 				542B789A04BCED419AFE19DF /* inffast.c in Sources */,
 				8F0784E051C7E392916A7B7B /* inflate.c in Sources */,
