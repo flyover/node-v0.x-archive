@@ -1562,7 +1562,8 @@ Isolate::Isolate()
   thread_manager_->isolate_ = this;
 
 #if defined(V8_TARGET_ARCH_ARM) && !defined(__arm__) || \
-    defined(V8_TARGET_ARCH_MIPS) && !defined(__mips__)
+    defined(V8_TARGET_ARCH_MIPS) && !defined(__mips__) || \
+	defined(USE_SIMULATOR)
   simulator_initialized_ = false;
   simulator_i_cache_ = NULL;
   simulator_redirection_ = NULL;

@@ -533,7 +533,7 @@
                 '../../src/arm/stub-cache-arm.cc',
               ],
             }],
-            ['v8_target_arch=="ia32" or v8_target_arch=="mac" or OS=="mac"', {
+            ['v8_target_arch=="ia32" or v8_target_arch=="mac" or OS=="mac" or v8_target_arch=="ios" or OS=="ios"', {
               'sources': [
                 '../../src/ia32/assembler-ia32-inl.h',
                 '../../src/ia32/assembler-ia32.cc',
@@ -598,7 +598,7 @@
                 '../../src/mips/stub-cache-mips.cc',
               ],
             }],
-            ['v8_target_arch=="x64" or v8_target_arch=="mac" or OS=="mac"', {
+            ['v8_target_arch=="x64" or v8_target_arch=="mac" or OS=="mac" or v8_target_arch=="ios" or OS=="ios"', {
               'sources': [
                 '../../src/x64/assembler-x64-inl.h',
                 '../../src/x64/assembler-x64.cc',
@@ -652,7 +652,11 @@
               }
             ],
             ['OS=="android"', {
+                'link_settings': {
+                  'libraries': [ '-llog' ],
+                },
                 'defines': [
+                  'ANDROID',
                   'CAN_USE_VFP_INSTRUCTIONS',
                 ],
                 'sources': [
@@ -724,6 +728,12 @@
               }
             ],
             ['OS=="mac"', {
+              'sources': [
+                '../../src/platform-macos.cc',
+                '../../src/platform-posix.cc'
+              ]},
+            ],
+            ['OS=="ios"', {
               'sources': [
                 '../../src/platform-macos.cc',
                 '../../src/platform-posix.cc'

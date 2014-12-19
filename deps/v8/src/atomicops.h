@@ -59,9 +59,14 @@ typedef int32_t Atomic32;
 // We need to be able to go between Atomic64 and AtomicWord implicitly.  This
 // means Atomic64 and AtomicWord should be the same type on 64-bit.
 #if defined(__APPLE__)
+# include "TargetConditionals.h"
+# if TARGET_OS_MAC
 // MacOS is an exception to the implicit conversion rule above,
 // because it uses long for intptr_t.
 typedef int64_t Atomic64;
+# else
+typedef intptr_t Atomic64;
+# endif
 #else
 typedef intptr_t Atomic64;
 #endif
@@ -155,7 +160,7 @@ Atomic64 Release_Load(volatile const Atomic64* ptr);
   (defined(V8_HOST_ARCH_IA32) || defined(V8_HOST_ARCH_X64))
 #include "atomicops_internals_x86_msvc.h"
 #elif defined(__APPLE__) && \
-  (defined(V8_HOST_ARCH_IA32) || defined(V8_HOST_ARCH_X64))
+  (defined(V8_HOST_ARCH_IA32) || defined(V8_HOST_ARCH_X64) || defined(V8_HOST_ARCH_ARM))
 #include "atomicops_internals_x86_macosx.h"
 #elif defined(__GNUC__) && \
   (defined(V8_HOST_ARCH_IA32) || defined(V8_HOST_ARCH_X64))

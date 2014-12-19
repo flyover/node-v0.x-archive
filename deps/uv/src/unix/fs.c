@@ -44,6 +44,10 @@
 # include <sys/uio.h>
 #endif
 
+#if defined(USE_UV_WRAP)
+#include "wrap.h"
+#endif
+
 #define INIT(type)                                                            \
   do {                                                                        \
     uv__req_init((loop), (req), UV_FS);                                       \

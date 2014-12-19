@@ -88,8 +88,18 @@ typedef int mode_t;
 using namespace v8;
 
 # ifdef __APPLE__
-# include <crt_externs.h>
-# define environ (*_NSGetEnviron())
+#  include "TargetConditionals.h"
+#  if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
+#   include <sys/types.h>
+#   include <grp.h>
+#   include <unistd.h>
+    extern char **environ;
+#  elif TARGET_OS_MAC
+#   include <crt_externs.h>
+#   define environ (*_NSGetEnviron())
+#  else
+#   error "unsupported Apple platform"
+#  endif
 # elif !defined(_MSC_VER)
 extern char **environ;
 # endif
@@ -1446,6 +1456,48 @@ static Handle<Value> Umask(const Arguments& args) {
 
 #ifdef __POSIX__
 
+#if defined(__ANDROID__)
+static int getpwnam_r(const char* name, struct passwd* pwd, char* buf, size_t size, struct passwd** pp)
+{
+	errno = 0;
+	struct passwd* _pwd = getpwnam(name);
+	if (_pwd != NULL)
+	{
+		memcpy(pwd, _pwd, sizeof(*pwd));
+		if (pp) { *pp = pwd; }
+		return 0;
+	}
+	if (pp) { *pp = NULL; }
+	return errno;
+}
+static int getpwuid_r(uid_t uid, struct passwd* pwd, char* buf, size_t size, struct passwd** pp)
+{
+	errno = 0;
+	struct passwd* _pwd = getpwuid(uid);
+	if (_pwd != NULL)
+	{
+		memcpy(pwd, _pwd, sizeof(*pwd));
+		if (pp) { *pp = pwd; }
+		return 0;
+	}
+	if (pp) { *pp = NULL; }
+	return errno;
+}
+static int getgrnam_r(const char *name, struct group* grp, char* buf, size_t size, struct group** pp)
+{
+	errno = 0;
+	struct group* _grp = getgrnam(name);
+	if (_grp != NULL)
+	{
+		memcpy(grp, _grp, sizeof(*grp));
+		if (pp) { *pp = grp; }
+		return 0;
+	}
+	if (pp) { *pp = NULL; }
+	return errno;
+}
+#endif
+
 static const uid_t uid_not_found = static_cast<uid_t>(-1);
 static const gid_t gid_not_found = static_cast<gid_t>(-1);
 
@@ -1975,6 +2027,8 @@ void FatalException(TryCatch &try_catch) {
 Persistent<Object> binding_cache;
 Persistent<Array> module_load_list;
 
+node_module_struct* (*get_external_module)(const char *name) = NULL;
+
 static Handle<Value> Binding(const Arguments& args) {
   HandleScope scope;
 
@@ -1999,7 +2053,13 @@ static Handle<Value> Binding(const Arguments& args) {
   uint32_t l = module_load_list->Length();
   module_load_list->Set(l, String::New(buf));
 
-  if ((modp = get_builtin_module(*module_v)) != NULL) {
+  if ((get_external_module != NULL) && ((modp = get_external_module(*module_v)) != NULL)) {
+	  exports = Object::New();
+	  // External bindings don't have a "module" object,
+	  // only exports.
+	  modp->register_func(exports, Undefined());
+	  binding_cache->Set(module, exports);
+  } else if ((modp = get_builtin_module(*module_v)) != NULL) {
     exports = Object::New();
     // Internal bindings don't have a "module" object,
     // only exports.
