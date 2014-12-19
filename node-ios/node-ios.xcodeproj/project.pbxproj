@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -4321,7 +4321,11 @@
 			};
 			buildConfigurationList = 67280E7FB61EC3A7431CA7F7 /* Build configuration list for PBXProject "node-ios" */;
 			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = A4CF5030A2098637443A1D58;
 			projectDirPath = "";
 			projectRoot = "";
@@ -6464,6 +6468,7 @@
 				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
 				SDKROOT = iphoneos;
 				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -6475,6 +6480,7 @@
 				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
 				SDKROOT = iphoneos;
 				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
