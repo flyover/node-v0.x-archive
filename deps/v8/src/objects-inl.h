@@ -892,7 +892,7 @@ MaybeObject* Object::GetProperty(String* key, PropertyAttributes* attributes) {
     }                                                                   \
   }
 
-#ifndef V8_TARGET_ARCH_MIPS
+#if !defined(V8_TARGET_ARCH_MIPS) && !defined(V8_TARGET_ARCH_ARM)
   #define READ_DOUBLE_FIELD(p, offset) \
     (*reinterpret_cast<double*>(FIELD_ADDR(p, offset)))
 #else  // V8_TARGET_ARCH_MIPS
@@ -910,7 +910,7 @@ MaybeObject* Object::GetProperty(String* key, PropertyAttributes* attributes) {
   #define READ_DOUBLE_FIELD(p, offset) read_double_field(p, offset)
 #endif  // V8_TARGET_ARCH_MIPS
 
-#ifndef V8_TARGET_ARCH_MIPS
+#if !defined(V8_TARGET_ARCH_MIPS) && !defined(V8_TARGET_ARCH_ARM)
   #define WRITE_DOUBLE_FIELD(p, offset, value) \
     (*reinterpret_cast<double*>(FIELD_ADDR(p, offset)) = value)
 #else  // V8_TARGET_ARCH_MIPS

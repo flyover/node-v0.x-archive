@@ -54,6 +54,9 @@
 
 /* Define to 1 if you have the <arpa/nameser_compat.h> header file. */
 #define HAVE_ARPA_NAMESER_COMPAT_H 1
+#if defined(__ANDROID__)
+#undef HAVE_ARPA_NAMESER_COMPAT_H
+#endif
 
 /* Define to 1 if you have the <arpa/nameser.h> header file. */
 #define HAVE_ARPA_NAMESER_H 1
