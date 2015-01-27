@@ -130,7 +130,7 @@
           }]
         ]
       }],
-      [ 'OS=="linux" or OS=="freebsd" or OS=="openbsd" or OS=="solaris"', {
+      [ 'OS=="linux" or OS=="freebsd" or OS=="openbsd" or OS=="solaris" or OS=="android"', {
         'cflags': [ '-Wall' ],
         'cflags_cc': [ '-fno-rtti', '-fno-exceptions' ],
         'target_conditions': [
@@ -143,7 +143,7 @@
             'cflags': [ '-m32' ],
             'ldflags': [ '-m32' ],
           }],
-          [ 'OS=="linux"', {
+          [ 'OS=="linux" or OS=="android"', {
             'cflags': [ '-ansi' ],
           }],
           [ 'OS=="solaris"', {
@@ -158,7 +158,7 @@
           }],
         ],
       }],
-      ['OS=="mac"', {
+      ['OS=="mac" or OS=="ios"', {
         'xcode_settings': {
           'ALWAYS_SEARCH_USER_PATHS': 'NO',
           'GCC_CW_ASM_SYNTAX': 'NO',                # No -fasm-blocks
@@ -189,6 +189,9 @@
           }],
           ['target_arch=="x64"', {
             'xcode_settings': {'ARCHS': ['x86_64']},
+          }],
+          ['target_arch=="arm"', {
+            'xcode_settings': {'ARCHS': ['armv7']},
           }],
         ],
         'target_conditions': [
