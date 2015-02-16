@@ -86,8 +86,18 @@ typedef int mode_t;
 #endif
 
 #ifdef __APPLE__
-#include <crt_externs.h>
-#define environ (*_NSGetEnviron())
+# include "TargetConditionals.h"
+# if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
+#  include <sys/types.h>
+#  include <grp.h>
+#  include <unistd.h>
+   extern char **environ;
+# elif TARGET_OS_MAC
+#  include <crt_externs.h>
+#  define environ (*_NSGetEnviron())
+# else
+#  error "unsupported Apple platform"
+# endif
 #elif !defined(_MSC_VER)
 extern char **environ;
 #endif
@@ -2927,8 +2937,10 @@ static void PrintHelp() {
          "                       present.\n"
 #endif
 #endif
+#if HAVE_OPENSSL
          "  --enable-ssl2        enable ssl2\n"
          "  --enable-ssl3        enable ssl3\n"
+#endif
          "\n"
          "Environment variables:\n"
 #ifdef _WIN32
@@ -2996,10 +3008,12 @@ static void ParseArgs(int* argc,
     } else if (strcmp(arg, "--version") == 0 || strcmp(arg, "-v") == 0) {
       printf("%s\n", NODE_VERSION);
       exit(0);
+#if HAVE_OPENSSL
     } else if (strcmp(arg, "--enable-ssl2") == 0) {
       SSL2_ENABLE = true;
     } else if (strcmp(arg, "--enable-ssl3") == 0) {
       SSL3_ENABLE = true;
+#endif
     } else if (strcmp(arg, "--help") == 0 || strcmp(arg, "-h") == 0) {
       PrintHelp();
       exit(0);

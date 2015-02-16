@@ -388,7 +388,7 @@ int uv_cond_timedwait(uv_cond_t* cond, uv_mutex_t* mutex, uint64_t timeout) {
   timeout += uv__hrtime(UV_CLOCK_PRECISE);
   ts.tv_sec = timeout / NANOSEC;
   ts.tv_nsec = timeout % NANOSEC;
-#if defined(__ANDROID__)
+#if defined(__ANDROID__) && defined(HAVE_PTHREAD_COND_TIMEDWAIT_MONOTONIC_NP)
   /*
    * The bionic pthread implementation doesn't support CLOCK_MONOTONIC,
    * but has this alternative function instead.

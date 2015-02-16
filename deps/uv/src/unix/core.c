@@ -74,6 +74,10 @@
 #include <sys/ioctl.h>
 #endif
 
+#if defined(USE_UV_WRAP)
+#include "wrap.h"
+#endif
+
 static void uv__run_pending(uv_loop_t* loop);
 
 /* Verify that uv_buf_t is ABI-compatible with struct iovec. */
