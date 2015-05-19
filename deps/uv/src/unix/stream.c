@@ -60,6 +60,10 @@ struct uv__stream_select_s {
 };
 #endif /* defined(__APPLE__) */
 
+#if defined(USE_UV_WRAP)
+#include "wrap.h"
+#endif
+
 static void uv__stream_connect(uv_stream_t*);
 static void uv__write(uv_stream_t* stream);
 static void uv__read(uv_stream_t* stream);

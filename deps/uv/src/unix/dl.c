@@ -27,6 +27,10 @@
 #include <string.h>
 #include <locale.h>
 
+#if defined(USE_UV_WRAP)
+#include "wrap.h"
+#endif
+
 static int uv__dlerror(uv_lib_t* lib);
 
 
