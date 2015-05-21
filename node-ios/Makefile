@@ -1,5 +1,7 @@
 GYP ?= gyp
 
-all:
+all: gyp
+
+gyp:
 	$(GYP) --depth=. -f xcode -DOS=ios --generator-output=.
 
