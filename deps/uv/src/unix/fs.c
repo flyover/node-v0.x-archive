@@ -58,10 +58,6 @@
 # include <sys/sendfile.h>
 #endif
 
-#if defined(USE_UV_WRAP)
-#include "wrap.h"
-#endif
-
 #define INIT(type)                                                            \
   do {                                                                        \
     uv__req_init((loop), (req), UV_FS);                                       \
@@ -757,11 +753,7 @@ static void uv__to_stat(struct stat* src, uv_stat_t* dst) {
 static int uv__fs_stat(const char *path, uv_stat_t *buf) {
   struct stat pbuf;
   int ret;
-#if defined(USE_UV_WRAP)
-  ret = uv_wrap_stat(path, &pbuf);
-#else
   ret = stat(path, &pbuf);
-#endif
   uv__to_stat(&pbuf, buf);
   return ret;
 }

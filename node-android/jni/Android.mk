@@ -1057,7 +1057,6 @@ include $(BUILD_STATIC_LIBRARY)
 # uv
 
 UV_CFLAGS := $(NODE_COMMON_CFLAGS)
-UV_CFLAGS += '-DUSE_UV_WRAP'
 UV_CFLAGS += '-D_GNU_SOURCE'
 UV_CFLAGS += '-DHAVE_CONFIG_H'
 UV_CFLAGS += -Wstrict-aliasing
@@ -1103,8 +1102,6 @@ UV_SRC_FILES += $(NODE_PATH)/deps/uv/src/unix/linux-inotify.c
 UV_SRC_FILES += $(NODE_PATH)/deps/uv/src/unix/linux-syscalls.c
 UV_SRC_FILES += $(NODE_PATH)/deps/uv/src/unix/pthread-fixes.c
 UV_SRC_FILES += $(NODE_PATH)/deps/uv/src/unix/android-ifaddrs.c
-
-UV_SRC_FILES += $(NODE_PATH)/deps/uv/src/unix/wrap.c # USE_UV_WRAP
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := static-library-uv
