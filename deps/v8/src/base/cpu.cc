@@ -115,6 +115,10 @@ static uint32_t ReadELFHWCaps() {
 
 #endif  // V8_HOST_ARCH_ARM
 
+#endif  // V8_OS_LINUX
+
+#if V8_OS_LINUX || V8_OS_POSIX
+
 // Extract the information exposed by the kernel via /proc/cpuinfo.
 class CPUInfo V8_FINAL {
  public:
@@ -206,6 +210,10 @@ class CPUInfo V8_FINAL {
   char* data_;
   size_t datalen_;
 };
+
+#endif	// V8_OS_LINUX || V8_OS_POSIX
+
+#if V8_OS_LINUX
 
 #if V8_HOST_ARCH_ARM || V8_HOST_ARCH_MIPS || V8_HOST_ARCH_MIPS64
 
