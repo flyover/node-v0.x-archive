@@ -1,6 +1,6 @@
-APP_PLATFORM := android-10
+#APP_PLATFORM := android-21
 
-NDK_TOOLCHAIN_VERSION := 4.9
+#NDK_TOOLCHAIN_VERSION := 4.9
 
 # Uncomment this if you're using STL in your project
 # See CPLUSPLUS-SUPPORT.html in the NDK documentation for more information
@@ -20,6 +20,3 @@ APP_ABI := all
 #APP_ABI := mips64
 #APP_ABI := x86
 #APP_ABI := x86_64
-
-#APP_ABI := armeabi armeabi-v7a arm64-v8a mips x86 x86_64
-
