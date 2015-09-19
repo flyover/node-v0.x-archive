@@ -1,4 +1,4 @@
-#APP_PLATFORM := android-21
+APP_PLATFORM := android-21
 
 #NDK_TOOLCHAIN_VERSION := 4.9
 
